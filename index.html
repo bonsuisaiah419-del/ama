@@ -1,0 +1,249 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NovaBank — Demo</title>
+  <link rel="icon" href="assets/img/logo.svg">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <img src="assets/img/logo.svg" alt="logo">
+      <span>NovaBank</span>
+    </div>
+    <nav id="mainNav" style="display:none">
+      <a class="tab" data-route="dashboard">Dashboard</a>
+      <a class="tab" data-route="accounts">Accounts</a>
+      <a class="tab" data-route="transfer">Transfer</a>
+      <a class="tab" data-route="transactions">Transactions</a>
+      <a class="tab" data-route="profile">Profile</a>
+      <a class="tab" data-route="support">Support</a>
+    </nav>
+    <div class="actions">
+      <label class="toggle">
+        <div class="switch" id="modeSwitch" title="Toggle dark mode"></div>
+        <span class="small">Theme</span>
+      </label>
+      <button id="logoutBtn" class="btn" style="display:none">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Auth -->
+    <section id="auth" class="auth section active">
+      <div class="card">
+        <h2>Welcome to NovaBank</h2>
+        <p class="small">Demo login: <b>bonsuisaiah5@gmail.com</b> &middot; PIN <b>Qwabi1</b></p>
+        <div class="row two" style="margin-top:14px">
+          <div>
+            <label class="label">Email</label>
+            <input id="email" class="input" placeholder="bonsuisaiah5@gmail.com" autocomplete="username">
+          </div>
+          <div>
+            <label class="label">PIN</label>
+            <input id="pin" class="input" placeholder="••••" maxlength="6" autocomplete="current-password">
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <button id="loginBtn" class="btn primary">Sign in</button>
+        </div>
+        <div id="authMsg"></div>
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="section">
+      <div class="grid cols-3">
+        <div class="card kpi">
+          <div>
+            <div class="hint">Total balance</div>
+            <div id="kpiTotal" class="value">—</div>
+          </div>
+          <div class="badge">GHS</div>
+        </div>
+        <div class="card kpi">
+          <div>
+            <div class="hint">Last 30d inflow</div>
+            <div id="kpiIn" class="value">—</div>
+          </div>
+          <div class="badge in">IN</div>
+        </div>
+        <div class="card kpi">
+          <div>
+            <div class="hint">Last 30d outflow</div>
+            <div id="kpiOut" class="value">—</div>
+          </div>
+          <div class="badge out">OUT</div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3>Recent activity</h3>
+        <table class="table" id="recentTable">
+          <thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Type</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Accounts -->
+    <section id="accounts" class="section">
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Your accounts</h3>
+          <div id="accountsList"></div>
+        </div>
+        <div class="card">
+          <h3>Quick actions</h3>
+          <div class="row two">
+            <div>
+              <label class="label">Select account</label>
+              <select id="qaAccount" class="input"></select>
+            </div>
+            <div>
+              <label class="label">Amount (GHS)</label>
+              <input id="qaAmount" class="input" placeholder="0.00" inputmode="decimal">
+            </div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button id="btnDeposit" class="btn">Deposit</button>
+            <button id="btnWithdraw" class="btn">Withdraw</button>
+          </div>
+          <div id="qaMsg"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transfer -->
+    <section id="transfer" class="section">
+      <div class="card">
+        <h3>Transfer funds</h3>
+        <div class="row three">
+          <div>
+            <label class="label">From</label>
+            <select id="tFrom" class="input"></select>
+          </div>
+          <div>
+            <label class="label">To</label>
+            <select id="tTo" class="input"></select>
+          </div>
+          <div>
+            <label class="label">Amount (GHS)</label>
+            <input id="tAmount" class="input" placeholder="0.00" inputmode="decimal">
+          </div>
+        </div>
+        <div class="row two" style="margin-top:10px">
+          <div>
+            <label class="label">Note (optional)</label>
+            <input id="tNote" class="input" placeholder="e.g. Rent, fuel, lunch">
+          </div>
+          <div>
+            <label class="label">Date</label>
+            <input id="tDate" class="input" type="date">
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <button id="tSubmit" class="btn primary">Send</button>
+        </div>
+        <div id="tMsg"></div>
+      </div>
+    </section>
+
+    <!-- Transactions -->
+    <section id="transactions" class="section">
+      <div class="card">
+        <h3>Transaction history</h3>
+        <table class="table" id="txTable">
+          <thead><tr><th>Date</th><th>Account</th><th>Description</th><th>Amount</th><th>Type</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Profile -->
+    <section id="profile" class="section">
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Your profile</h3>
+          <div class="row two">
+            <div>
+              <label class="label">Full name</label>
+              <input id="pName" class="input">
+            </div>
+            <div>
+              <label class="label">Email</label>
+              <input id="pEmail" class="input" disabled>
+            </div>
+          </div>
+          <div class="row two">
+            <div>
+              <label class="label">Phone</label>
+              <input id="pPhone" class="input" placeholder="+233...">
+            </div>
+            <div>
+              <label class="label">City</label>
+              <input id="pCity" class="input" placeholder="Accra">
+            </div>
+          </div>
+          <div style="margin-top:10px">
+            <button id="pSave" class="btn primary">Save profile</button>
+          </div>
+          <div id="pMsg"></div>
+        </div>
+        <div class="card">
+          <h3>Security</h3>
+          <div class="row two">
+            <div>
+              <label class="label">Change PIN</label>
+              <input id="pNewPin" class="input" placeholder="New PIN" maxlength="6">
+            </div>
+            <div>
+              <label class="label">&nbsp;</label>
+              <button id="pChangePin" class="btn">Update PIN</button>
+            </div>
+          </div>
+          <p class="small">This is a demo app. No real money is involved.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support -->
+    <section id="support" class="section">
+      <div class="card">
+        <h3>Support</h3>
+        <p class="small">Questions? Email <b>support@novabank.demo</b>. In this demo, messages are not sent.</p>
+        <div class="row two">
+          <div>
+            <label class="label">Subject</label>
+            <input id="sSubject" class="input">
+          </div>
+          <div>
+            <label class="label">Category</label>
+            <select id="sCat" class="input">
+              <option>General</option>
+              <option>Payments</option>
+              <option>Cards</option>
+              <option>Security</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="label">Message</label>
+          <textarea id="sMsg" class="input" rows="5" placeholder="Type your question..."></textarea>
+        </div>
+        <div style="margin-top:10px">
+          <button id="sSend" class="btn primary">Send message</button>
+        </div>
+        <div id="sOut"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">© <span id="year"></span> NovaBank (Demo). For educational use only.</footer>
+
+  <script src="assets/js/mock.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
